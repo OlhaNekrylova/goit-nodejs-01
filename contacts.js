@@ -10,49 +10,38 @@ const listContacts = async ()=> {
 }
 
 const getContactById = async (id) => {
-    const books = await getAll();
-    const result = books.find(item => item.id === id);
+    const contacts = await listContacts();
+    const result = contacts.find(item => item.id === id);
     return result || null;
 }
 
-const addContact = async({title, author}) => {
-    const books = await getAll();
-    const newBook = {
+const addContact = async({name, email, phone}) => {
+    const contacts = await listContacts();
+    const newContact = {
         id: nanoid(),
-        title,
-        author,
+        name,
+        email,
+        phone,
     };
-    books.push(newBook);
-    await fs.writeFile(booksPath, JSON.stringify(books, null, 2));
-    return newBook;
+    contacts.push(newContact);
+    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+    return newContact;
 }
 
-// const updateById = async (id, data) => {
-//     const books = await getAll();
-//     const index = books.findIndex(item => item.id === id);
-//     if(index === -1){
-//         return null;
-//     }
-//     books[index] = {id, ...data};
-//     await fs.writeFile(booksPath, JSON.stringify(books, null, 2));
-//     return books[index];
-// }
-
 const removeContact = async (id) => {
-    const books = await getAll();
-    const index = books.findIndex(item => item.id === id);
+    const contacts = await listContacts();
+    const index = contacts.findIndex(item => item.id === id);
     if(index === -1){
         return null;
     }
-    const [result] = books.splice(index, 1);
-    await fs.writeFile(booksPath, JSON.stringify(books, null, 2));
+    const [result] = contacts.splice(index, 1);
+    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
     return result;
 }
 
 module.exports = {
-    getAll,
-    getById,
-    add,
-    // updateById,
-    deleteById,
+    listContacts,
+    getContactById,
+    addContact,
+    removeContact,
 }

@@ -1,5 +1,4 @@
 const argv = require("yargs").argv;
-// const {hideBin} = require("yargs/helpers");
 
 const contacts = require("./contacts");
 
@@ -27,6 +26,3 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
 }
 
 invokeAction(argv);
-
-
-
